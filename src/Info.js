@@ -1,13 +1,13 @@
 import React from "react";
 import styles from "./Info.module.css";
 
-export default function Info() {
+export default function Info(props) {
+  const { data, min, max } = props;
   return (
     <div className={styles.infoContainer}>
-      <div>Info</div>
-      <div>Dataset Size</div>
-      <div>Min</div>
-      <div>Max</div>
+      <div>Size: {data ? data.length.toLocaleString() : null}</div>
+      <div>Min: {min ? min.toLocaleString() : null}</div>
+      <div>Max: {max ? max.toLocaleString() : null}</div>
     </div>
   );
 }

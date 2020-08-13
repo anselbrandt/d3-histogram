@@ -2,7 +2,14 @@ import React from "react";
 import styles from "./Controls.module.css";
 
 export default function Controls(props) {
-  const { inputOne, inputTwo, handleSetInputOne, handleSetInputTwo } = props;
+  const {
+    bins,
+    xScale,
+    yScale,
+    handleSetBins,
+    handleSetXScale,
+    handleSetYScale,
+  } = props;
   return (
     <div className={styles.controlsContainer}>
       <div>
@@ -10,22 +17,33 @@ export default function Controls(props) {
           type="range"
           min={1}
           max={100}
-          value={inputOne}
-          onChange={handleSetInputOne}
+          value={bins}
+          onChange={handleSetBins}
         ></input>
-        <div>Slider One</div>
-        <div>{inputOne}</div>
+        <div>Bins</div>
+        <div>{bins}</div>
       </div>
       <div>
         <input
           type="range"
           min={1}
           max={100}
-          value={inputTwo}
-          onChange={handleSetInputTwo}
+          value={xScale}
+          onChange={handleSetXScale}
         ></input>
-        <div>Slider Two</div>
-        <div>{inputTwo}</div>
+        <div>X-Scale</div>
+        <div>{xScale}</div>
+      </div>
+      <div>
+        <input
+          type="range"
+          min={1}
+          max={100}
+          value={yScale}
+          onChange={handleSetYScale}
+        ></input>
+        <div>Y-Scale</div>
+        <div>{yScale}</div>
       </div>
     </div>
   );
