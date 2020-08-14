@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./Chart.module.css";
-import { select, scaleBand, scaleLinear, axisBottom, axisRight } from "d3";
+import { select, scaleBand, scaleLinear, axisBottom, axisLeft } from "d3";
 
 export default function Chart(props) {
   const { svgRef, width, height, data, highCount } = props;
@@ -24,15 +24,12 @@ export default function Chart(props) {
       const xAxis = axisBottom(xScale).ticks(data.length);
 
       svg
-        .select(".x-axis")
+        .select(`.${styles.xAxis}`)
         .style("transform", `translateY(${height}px)`)
         .call(xAxis);
 
-      const yAxis = axisRight(yScale);
-      svg
-        .select(".y-axis")
-        .style("transform", `translateX(${width}px)`)
-        .call(yAxis);
+      const yAxis = axisLeft(yScale);
+      svg.select(`.${styles.yAxis}`).call(yAxis);
 
       svg
         .selectAll(".bar")
