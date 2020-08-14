@@ -11,7 +11,7 @@ export default function Info(props) {
       <div>Cutoff: {cutoff ? cutoff.toLocaleString() : null}</div>
       <div>Bins: {bins ? bins : null}</div>
       <div>Highest Count: {highCount ? highCount.toLocaleString() : null}</div>
-      <div>Histogram</div>
+      {/* <div>Histogram</div>
       <div>Price: Count</div>
       <div>
         {histogram
@@ -21,7 +21,7 @@ export default function Info(props) {
               </div>
             ))
           : null}
-      </div>
+      </div> */}
     </div>
   );
 }

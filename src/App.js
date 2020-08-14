@@ -65,7 +65,7 @@ function App() {
         cutoff={cutoff}
         highCount={highCount}
       />
-      <div className={styles.gridContainer}>
+      <div className={styles.container}>
         <Controls
           bins={bins}
           cutoff={cutoff}
