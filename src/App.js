@@ -10,8 +10,8 @@ import { getMin, getMax, getHistogram } from "./utils";
 function App() {
   const { width, height } = useGetViewport();
   const svgRef = useRef();
-  const [bins, setBins] = useState(50);
-  const [cutoff, setCutoff] = useState(1000000);
+  const [bins, setBins] = useState(100);
+  const [cutoff, setCutoff] = useState(1500000);
   const [yScale, setYScale] = useState(50);
   const [data, setData] = useState();
   const [min, setMin] = useState();
