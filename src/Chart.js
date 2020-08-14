@@ -65,6 +65,7 @@ export default function Chart(props) {
         .attr("y", -height)
         .attr("width", xScale.bandwidth())
         .attr("fill", (d, index) => getColor(+data[index].bin, bins))
+        .attr("stroke", (d, index) => getColor(+data[index].bin, bins))
         .attr("height", (value) => height - yScale(value));
     }
   }, [svgRef, width, height, histBins, data, cutoff, highCount, target, bins]);
