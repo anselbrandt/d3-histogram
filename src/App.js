@@ -11,7 +11,7 @@ function App() {
   const { width, height } = useGetViewport();
   const svgRef = useRef();
   const [bins, setBins] = useState(50);
-  const [cutoff, setCutoff] = useState(1500000);
+  const [cutoff, setCutoff] = useState(1000000);
   const [yScale, setYScale] = useState(50);
   const [data, setData] = useState();
   const [min, setMin] = useState();
@@ -60,8 +60,7 @@ function App() {
         width={width * 0.8}
         height={height * 0.5}
         svgRef={svgRef}
-        min={min}
-        max={max}
+        bins={bins}
         data={histogram}
         cutoff={cutoff}
         highCount={highCount}

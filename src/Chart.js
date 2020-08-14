@@ -3,25 +3,33 @@ import styles from "./Chart.module.css";
 import { select, scaleBand, scaleLinear, axisBottom, axisLeft } from "d3";
 
 export default function Chart(props) {
-  const { svgRef, width, height, data, highCount } = props;
+  const { svgRef, width, height, bins, data, cutoff, highCount } = props;
 
   useEffect(() => {
     const svg = select(svgRef.current);
 
-    if (data && highCount) {
+    const ticks = 4;
+
+    if (data && highCount && bins && cutoff) {
       const xScale = scaleBand()
         .domain(data.map((value, index) => index))
         .range([0, width]);
 
       const yScale = scaleLinear().domain([0, highCount]).range([height, 0]);
 
-      const xAxis = axisBottom(xScale).ticks(data.length);
+      const xAxis = axisBottom(xScale)
+        .tickValues(
+          Array(ticks)
+            .fill()
+            .map((value, index) => (index + 1) * parseInt(bins / (ticks + 1)))
+        )
+        .tickFormat((tick) => `$${parseInt((tick * (cutoff / bins)) / 1000)}k`);
       svg
         .select(`.${styles.xAxis}`)
         .style("transform", `translateY(${height}px)`)
         .call(xAxis);
 
-      const yAxis = axisLeft(yScale);
+      const yAxis = axisLeft(yScale).ticks(5);
       svg.select(`.${styles.yAxis}`).call(yAxis);
 
       svg
@@ -37,7 +45,7 @@ export default function Chart(props) {
         .attr("fill", "tomato")
         .attr("height", (value) => height - yScale(value));
     }
-  }, [svgRef, width, height, data, highCount]);
+  }, [svgRef, width, height, bins, data, cutoff, highCount]);
 
   return (
     <div>
