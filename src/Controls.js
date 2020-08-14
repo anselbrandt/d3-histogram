@@ -2,14 +2,7 @@ import React from "react";
 import styles from "./Controls.module.css";
 
 export default function Controls(props) {
-  const {
-    bins,
-    cutoff,
-    yScale,
-    handleSetBins,
-    handleSetCutoff,
-    handleSetYScale,
-  } = props;
+  const { bins, cutoff, handleSetBins, handleSetCutoff } = props;
   return (
     <div className={styles.controlsContainer}>
       <div>
@@ -34,17 +27,6 @@ export default function Controls(props) {
         <div>Cutoff</div>
         <div>{cutoff.toLocaleString()}</div>
       </div>
-      {/* <div>
-        <input
-          type="range"
-          min={1}
-          max={100}
-          value={yScale}
-          onChange={handleSetYScale}
-        ></input>
-        <div>Y-Scale</div>
-        <div>{yScale}</div>
-      </div> */}
     </div>
   );
 }

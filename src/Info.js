@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./Info.module.css";
 
 export default function Info(props) {
-  const { data, min, max, cutoff, bins, highCount, histogram } = props;
+  const { data, min, max, cutoff, bins, highCount } = props;
   return (
     <div className={styles.infoContainer}>
       <div>Size: {data ? data.length.toLocaleString() : null}</div>
