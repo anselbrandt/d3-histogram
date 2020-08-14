@@ -6,6 +6,7 @@ import Controls from "./Controls";
 import Info from "./Info";
 import { csv } from "d3";
 import { getMin, getMax, getHistogram } from "./utils";
+import Toggle from "./Toggle";
 
 function App() {
   const { width, height } = useGetViewport();
@@ -19,6 +20,19 @@ function App() {
   const [highCount, setHighCount] = useState();
   const [peakValue, setPeakValue] = useState();
   const [target, setTarget] = useState(330000);
+  const [range, setRange] = useState([0.05, 0.15, 0.3]);
+
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleSetChecked = (event) => {
+    const value = event.target.checked;
+    setIsChecked(value);
+    if (value) {
+      setRange([0.1, 0.25, 0.5]);
+    } else {
+      setRange([0.05, 0.15, 0.3]);
+    }
+  };
 
   useEffect(() => {
     csv("/prices.csv").then((data) => {
@@ -68,7 +82,18 @@ function App() {
         cutoff={cutoff}
         highCount={highCount}
         target={target}
+        range={range}
       />
+      <span>
+        Narrow{" "}
+        <Toggle
+          id={"switch"}
+          name={"switch"}
+          isChecked={isChecked}
+          handleSetChecked={handleSetChecked}
+        />{" "}
+        Wide
+      </span>
       <div className={styles.container}>
         <Controls
           histBins={histBins}

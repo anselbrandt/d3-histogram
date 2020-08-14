@@ -14,9 +14,8 @@ export default function Chart(props) {
     cutoff,
     highCount,
     target,
+    range,
   } = props;
-
-  const range = [0.05, 0.15, 0.3];
 
   const { bins } = useGetBins(target, range);
 
@@ -25,7 +24,7 @@ export default function Chart(props) {
 
     const ticks = 4;
 
-    if (data && highCount && histBins && cutoff && bins) {
+    if (data && highCount && histBins && cutoff && bins && range) {
       const xScale = scaleBand()
         .domain(data.map((value, index) => index))
         .range([0, width]);
@@ -68,7 +67,18 @@ export default function Chart(props) {
         .attr("stroke", (d, index) => getColor(+data[index].bin, bins))
         .attr("height", (value) => height - yScale(value));
     }
-  }, [svgRef, width, height, histBins, data, cutoff, highCount, target, bins]);
+  }, [
+    svgRef,
+    width,
+    height,
+    histBins,
+    data,
+    cutoff,
+    highCount,
+    target,
+    bins,
+    range,
+  ]);
 
   return (
     <div>
