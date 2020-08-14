@@ -23,7 +23,13 @@ export default function Chart(props) {
             .fill()
             .map((value, index) => (index + 1) * parseInt(bins / (ticks + 1)))
         )
-        .tickFormat((tick) => `$${parseInt((tick * (cutoff / bins)) / 1000)}k`);
+        .tickFormat((tick) =>
+          parseInt((tick * (cutoff / bins)) / 1000) < 999
+            ? `$${parseInt((tick * (cutoff / bins)) / 1000)}k`
+            : `$${(parseInt((tick * (cutoff / bins)) / 1000) / 1000).toFixed(
+                2
+              )}M`
+        );
       svg
         .select(`.${styles.xAxis}`)
         .style("transform", `translateY(${height}px)`)
