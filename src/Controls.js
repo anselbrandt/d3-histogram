@@ -3,10 +3,10 @@ import styles from "./Controls.module.css";
 
 export default function Controls(props) {
   const {
-    bins,
+    histBins,
     cutoff,
     target,
-    handleSetBins,
+    handleSetHistBins,
     handleSetCutoff,
     handleSetTarget,
   } = props;
@@ -28,11 +28,11 @@ export default function Controls(props) {
           type="range"
           min={1}
           max={100}
-          value={bins}
-          onChange={handleSetBins}
+          value={histBins}
+          onChange={handleSetHistBins}
         ></input>
         <div>Bins</div>
-        <div>{bins}</div>
+        <div>{histBins}</div>
       </div>
       <div>
         <input

@@ -10,14 +10,14 @@ import { getMin, getMax, getHistogram } from "./utils";
 function App() {
   const { width, height } = useGetViewport();
   const svgRef = useRef();
-  const [bins, setBins] = useState(100);
+  const [histBins, setHistBins] = useState(100);
   const [cutoff, setCutoff] = useState(1500000);
   const [data, setData] = useState();
   const [min, setMin] = useState();
   const [max, setMax] = useState();
   const [histogram, setHistogram] = useState();
   const [highCount, setHighCount] = useState();
-  const [target, setTarget] = useState(300000);
+  const [target, setTarget] = useState(330000);
 
   useEffect(() => {
     csv("/prices.csv").then((data) => {
@@ -31,23 +31,23 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (data && bins && cutoff) {
-      const hist = getHistogram(data, bins, cutoff);
+    if (data && histBins && cutoff) {
+      const hist = getHistogram(data, histBins, cutoff);
       setHistogram(hist);
       console.log(hist);
       const high = Math.max(...hist.map((value) => value.count));
       setHighCount(high);
     }
-  }, [data, bins, cutoff]);
+  }, [data, histBins, cutoff]);
 
   const handleSetTarget = (event) => {
     const value = event.target.value;
     setTarget((+value / 100) * cutoff);
   };
 
-  const handleSetBins = (event) => {
+  const handleSetHistBins = (event) => {
     const value = event.target.value;
-    setBins(+value);
+    setHistBins(+value);
   };
 
   const handleSetCutoff = (event) => {
@@ -61,7 +61,7 @@ function App() {
         width={width * 0.8}
         height={height * 0.5}
         svgRef={svgRef}
-        bins={bins}
+        histBins={histBins}
         data={histogram}
         cutoff={cutoff}
         highCount={highCount}
@@ -69,10 +69,10 @@ function App() {
       />
       <div className={styles.container}>
         <Controls
-          bins={bins}
+          histBins={histBins}
           cutoff={cutoff}
           target={target}
-          handleSetBins={handleSetBins}
+          handleSetHistBins={handleSetHistBins}
           handleSetCutoff={handleSetCutoff}
           handleSetTarget={handleSetTarget}
         />
@@ -81,7 +81,7 @@ function App() {
           min={min}
           max={max}
           cutoff={cutoff}
-          bins={bins}
+          histBins={histBins}
           highCount={highCount}
           histogram={histogram}
         />

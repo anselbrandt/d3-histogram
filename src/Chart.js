@@ -7,7 +7,7 @@ export default function Chart(props) {
     svgRef,
     width,
     height,
-    bins,
+    histBins,
     data,
     cutoff,
     highCount,
@@ -19,7 +19,7 @@ export default function Chart(props) {
 
     const ticks = 4;
 
-    if (data && highCount && bins && cutoff) {
+    if (data && highCount && histBins && cutoff) {
       const xScale = scaleBand()
         .domain(data.map((value, index) => index))
         .range([0, width]);
@@ -30,14 +30,16 @@ export default function Chart(props) {
         .tickValues(
           Array(ticks)
             .fill()
-            .map((value, index) => (index + 1) * parseInt(bins / (ticks + 1)))
+            .map(
+              (value, index) => (index + 1) * parseInt(histBins / (ticks + 1))
+            )
         )
         .tickFormat((tick) =>
-          parseInt((tick * (cutoff / bins)) / 1000) < 999
-            ? `$${parseInt((tick * (cutoff / bins)) / 1000)}k`
-            : `$${(parseInt((tick * (cutoff / bins)) / 1000) / 1000).toFixed(
-                2
-              )}M`
+          parseInt((tick * (cutoff / histBins)) / 1000) < 999
+            ? `$${parseInt((tick * (cutoff / histBins)) / 1000)}k`
+            : `$${(
+                parseInt((tick * (cutoff / histBins)) / 1000) / 1000
+              ).toFixed(2)}M`
         );
       svg
         .select(`.${styles.xAxis}`)
@@ -57,11 +59,11 @@ export default function Chart(props) {
         .attr("y", -height)
         .attr("width", xScale.bandwidth())
         .attr("fill", (d, index) =>
-          data[index].bin < target ? "rgb(255,99,71" : "pink"
+          data[index].bin > target ? "rgb(255,99,71" : "pink"
         )
         .attr("height", (value) => height - yScale(value));
     }
-  }, [svgRef, width, height, bins, data, cutoff, highCount, target]);
+  }, [svgRef, width, height, histBins, data, cutoff, highCount, target]);
 
   return (
     <div>
