@@ -4,10 +4,10 @@ import styles from "./Controls.module.css";
 export default function Controls(props) {
   const {
     bins,
-    xScale,
+    cutoff,
     yScale,
     handleSetBins,
-    handleSetXScale,
+    handleSetCutoff,
     handleSetYScale,
   } = props;
   return (
@@ -28,13 +28,13 @@ export default function Controls(props) {
           type="range"
           min={1}
           max={100}
-          value={xScale}
-          onChange={handleSetXScale}
+          value={cutoff / 100000}
+          onChange={handleSetCutoff}
         ></input>
-        <div>X-Scale</div>
-        <div>{xScale}</div>
+        <div>Cutoff</div>
+        <div>{cutoff.toLocaleString()}</div>
       </div>
-      <div>
+      {/* <div>
         <input
           type="range"
           min={1}
@@ -44,7 +44,7 @@ export default function Controls(props) {
         ></input>
         <div>Y-Scale</div>
         <div>{yScale}</div>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -10,9 +10,8 @@ import { getMin, getMax, getHistogram } from "./utils";
 function App() {
   const { width, height } = useGetViewport();
   const svgRef = useRef();
-  const [bins, setBins] = useState(20);
-  const [cutoff, setCutoff] = useState(1000000);
-  const [xScale, setXScale] = useState(50);
+  const [bins, setBins] = useState(50);
+  const [cutoff, setCutoff] = useState(1500000);
   const [yScale, setYScale] = useState(50);
   const [data, setData] = useState();
   const [min, setMin] = useState();
@@ -28,21 +27,28 @@ function App() {
       const maxima = getMax(raw);
       setMin(minima);
       setMax(maxima);
-      const hist = getHistogram(raw, bins, cutoff);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (data && bins && cutoff) {
+      const hist = getHistogram(data, bins, cutoff);
       setHistogram(hist);
       const high = Math.max(...hist.map((value) => value.count));
       setHighCount(high);
-    });
-  }, [bins, cutoff]);
+    }
+  }, [data, bins, cutoff]);
 
   const handleSetBins = (event) => {
     const value = event.target.value;
-    setBins(value);
+    setBins(+value);
   };
-  const handleSetXScale = (event) => {
+
+  const handleSetCutoff = (event) => {
     const value = event.target.value;
-    setXScale(value);
+    setCutoff(+value * 100000);
   };
+
   const handleSetYScale = (event) => {
     const value = event.target.value;
     setYScale(value);
@@ -63,10 +69,10 @@ function App() {
       <div className={styles.gridContainer}>
         <Controls
           bins={bins}
-          xScale={xScale}
+          cutoff={cutoff}
           yScale={yScale}
           handleSetBins={handleSetBins}
-          handleSetXScale={handleSetXScale}
+          handleSetCutoff={handleSetCutoff}
           handleSetYScale={handleSetYScale}
         />
         <Info
@@ -74,6 +80,7 @@ function App() {
           min={min}
           max={max}
           cutoff={cutoff}
+          bins={bins}
           highCount={highCount}
           histogram={histogram}
         />

@@ -15,11 +15,6 @@ export default function Chart(props) {
 
       const yScale = scaleLinear().domain([0, highCount]).range([height, 0]);
 
-      // const colorScale = scaleLinear()
-      //   .domain([height * 0.5, height * 0.6, height])
-      //   .range(["green", "orange", "red"])
-      //   .clamp(true);
-
       const xAxis = axisBottom(xScale).ticks(data.length);
       svg
         .select(`.${styles.xAxis}`)
