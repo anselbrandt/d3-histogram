@@ -35,7 +35,6 @@ function App() {
     if (data && histBins && cutoff) {
       const hist = getHistogram(data, histBins, cutoff);
       setHistogram(hist);
-      console.log(hist);
       const high = Math.max(...hist.map((value) => value.count));
       setHighCount(high);
       const peak = hist.filter((value) => value.count === high);
