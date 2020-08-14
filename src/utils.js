@@ -58,7 +58,7 @@ export function getHistogram(arr, bins, cutoff) {
       };
     });
   }
-  return histArr(histObj);
+  return histArr(histObj).sort((a, b) => +a.bin - b.bin);
 }
 
 export default { getMin, getMax, getHistogram };

@@ -34,6 +34,7 @@ function App() {
     if (data && bins && cutoff) {
       const hist = getHistogram(data, bins, cutoff);
       setHistogram(hist);
+      console.log(hist);
       const high = Math.max(...hist.map((value) => value.count));
       setHighCount(high);
     }

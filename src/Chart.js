@@ -3,7 +3,16 @@ import styles from "./Chart.module.css";
 import { select, scaleBand, scaleLinear, axisBottom, axisLeft } from "d3";
 
 export default function Chart(props) {
-  const { svgRef, width, height, bins, data, cutoff, highCount } = props;
+  const {
+    svgRef,
+    width,
+    height,
+    bins,
+    data,
+    cutoff,
+    highCount,
+    target,
+  } = props;
 
   useEffect(() => {
     const svg = select(svgRef.current);
@@ -47,11 +56,12 @@ export default function Chart(props) {
         .attr("x", (value, index) => xScale(index))
         .attr("y", -height)
         .attr("width", xScale.bandwidth())
-        .transition()
-        .attr("fill", "rgb(255,99,71")
+        .attr("fill", (d, index) =>
+          data[index].bin < target ? "rgb(255,99,71" : "pink"
+        )
         .attr("height", (value) => height - yScale(value));
     }
-  }, [svgRef, width, height, bins, data, cutoff, highCount]);
+  }, [svgRef, width, height, bins, data, cutoff, highCount, target]);
 
   return (
     <div>
