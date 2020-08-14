@@ -6,7 +6,6 @@ export default function Controls(props) {
     bins,
     cutoff,
     target,
-    slider,
     handleSetBins,
     handleSetCutoff,
     handleSetTarget,
