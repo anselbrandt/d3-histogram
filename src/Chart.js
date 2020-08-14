@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import styles from "./Chart.module.css";
 import { select, scaleBand, scaleLinear, axisBottom, axisLeft } from "d3";
+import useGetBins from "./useGetBins";
+import getColor from "./getColor";
 
 export default function Chart(props) {
   const {
@@ -14,12 +16,16 @@ export default function Chart(props) {
     target,
   } = props;
 
+  const range = [0.05, 0.15, 0.3];
+
+  const { bins } = useGetBins(target, range);
+
   useEffect(() => {
     const svg = select(svgRef.current);
 
     const ticks = 4;
 
-    if (data && highCount && histBins && cutoff) {
+    if (data && highCount && histBins && cutoff && bins) {
       const xScale = scaleBand()
         .domain(data.map((value, index) => index))
         .range([0, width]);
@@ -58,12 +64,10 @@ export default function Chart(props) {
         .attr("x", (value, index) => xScale(index))
         .attr("y", -height)
         .attr("width", xScale.bandwidth())
-        .attr("fill", (d, index) =>
-          data[index].bin > target ? "rgb(255,99,71" : "pink"
-        )
+        .attr("fill", (d, index) => getColor(+data[index].bin, bins))
         .attr("height", (value) => height - yScale(value));
     }
-  }, [svgRef, width, height, histBins, data, cutoff, highCount, target]);
+  }, [svgRef, width, height, histBins, data, cutoff, highCount, target, bins]);
 
   return (
     <div>
