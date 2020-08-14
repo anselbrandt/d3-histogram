@@ -2,9 +2,28 @@ import React from "react";
 import styles from "./Controls.module.css";
 
 export default function Controls(props) {
-  const { bins, cutoff, handleSetBins, handleSetCutoff } = props;
+  const {
+    bins,
+    cutoff,
+    target,
+    slider,
+    handleSetBins,
+    handleSetCutoff,
+    handleSetTarget,
+  } = props;
   return (
     <div className={styles.controlsContainer}>
+      <div>
+        <input
+          type="range"
+          min={1}
+          max={100}
+          value={(target / cutoff) * 100}
+          onChange={handleSetTarget}
+        ></input>
+        <div>Target</div>
+        <div>{target ? target.toLocaleString() : null}</div>
+      </div>
       <div>
         <input
           type="range"

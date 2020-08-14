@@ -12,12 +12,12 @@ function App() {
   const svgRef = useRef();
   const [bins, setBins] = useState(100);
   const [cutoff, setCutoff] = useState(1500000);
-  const [yScale, setYScale] = useState(50);
   const [data, setData] = useState();
   const [min, setMin] = useState();
   const [max, setMax] = useState();
   const [histogram, setHistogram] = useState();
   const [highCount, setHighCount] = useState();
+  const [target, setTarget] = useState(300000);
 
   useEffect(() => {
     csv("/prices.csv").then((data) => {
@@ -39,6 +39,11 @@ function App() {
     }
   }, [data, bins, cutoff]);
 
+  const handleSetTarget = (event) => {
+    const value = event.target.value;
+    setTarget((+value / 100) * cutoff);
+  };
+
   const handleSetBins = (event) => {
     const value = event.target.value;
     setBins(+value);
@@ -47,11 +52,6 @@ function App() {
   const handleSetCutoff = (event) => {
     const value = event.target.value;
     setCutoff(+value * 100000);
-  };
-
-  const handleSetYScale = (event) => {
-    const value = event.target.value;
-    setYScale(value);
   };
 
   return (
@@ -64,15 +64,16 @@ function App() {
         data={histogram}
         cutoff={cutoff}
         highCount={highCount}
+        target={target}
       />
       <div className={styles.container}>
         <Controls
           bins={bins}
           cutoff={cutoff}
-          yScale={yScale}
+          target={target}
           handleSetBins={handleSetBins}
           handleSetCutoff={handleSetCutoff}
-          handleSetYScale={handleSetYScale}
+          handleSetTarget={handleSetTarget}
         />
         <Info
           data={data}

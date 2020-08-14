@@ -48,7 +48,7 @@ export default function Chart(props) {
         .attr("y", -height)
         .attr("width", xScale.bandwidth())
         .transition()
-        .attr("fill", "tomato")
+        .attr("fill", "rgb(255,99,71")
         .attr("height", (value) => height - yScale(value));
     }
   }, [svgRef, width, height, bins, data, cutoff, highCount]);
