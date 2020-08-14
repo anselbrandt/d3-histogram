@@ -10,13 +10,15 @@ import { getMin, getMax, getHistogram } from "./utils";
 function App() {
   const { width, height } = useGetViewport();
   const svgRef = useRef();
-  const [bins, setBins] = useState(50);
+  const [bins, setBins] = useState(20);
+  const [cutoff, setCutoff] = useState(1000000);
   const [xScale, setXScale] = useState(50);
   const [yScale, setYScale] = useState(50);
   const [data, setData] = useState();
   const [min, setMin] = useState();
   const [max, setMax] = useState();
   const [histogram, setHistogram] = useState();
+  const [highCount, setHighCount] = useState();
 
   useEffect(() => {
     csv("/prices.csv").then((data) => {
@@ -26,11 +28,12 @@ function App() {
       const maxima = getMax(raw);
       setMin(minima);
       setMax(maxima);
-      const hist = getHistogram(raw, 20, 10000000);
+      const hist = getHistogram(raw, bins, cutoff);
       setHistogram(hist);
-      console.log(hist);
+      const high = Math.max(...hist.map((value) => value.count));
+      setHighCount(high);
     });
-  }, []);
+  }, [bins, cutoff]);
 
   const handleSetBins = (event) => {
     const value = event.target.value;
@@ -51,9 +54,11 @@ function App() {
         width={width * 0.8}
         height={height * 0.5}
         svgRef={svgRef}
-        data={data}
         min={min}
         max={max}
+        data={histogram}
+        cutoff={cutoff}
+        highCount={highCount}
       />
       <div className={styles.gridContainer}>
         <Controls
@@ -64,7 +69,14 @@ function App() {
           handleSetXScale={handleSetXScale}
           handleSetYScale={handleSetYScale}
         />
-        <Info data={data} min={min} max={max} />
+        <Info
+          data={data}
+          min={min}
+          max={max}
+          cutoff={cutoff}
+          highCount={highCount}
+          histogram={histogram}
+        />
       </div>
     </div>
   );
