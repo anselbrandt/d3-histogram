@@ -3,28 +3,18 @@ import styles from "./Chart.module.css";
 import { select, scaleBand, scaleLinear, axisBottom, axisRight } from "d3";
 
 export default function Chart(props) {
-  const { svgRef, width, height } = props;
-
-  const [data, setData] = useState([
-    { count: 250 },
-    { count: 300 },
-    { count: 450 },
-    { count: 600 },
-    { count: 100 },
-    { count: 650 },
-    { count: 750 },
-  ]);
+  const { svgRef, width, height, data, highCount } = props;
 
   useEffect(() => {
     const svg = select(svgRef.current);
 
-    if (data) {
+    if (data && highCount) {
       const xScale = scaleBand()
         .domain(data.map((value, index) => index))
         .range([0, width])
         .padding(0.5);
 
-      const yScale = scaleLinear().domain([0, 750]).range([height, 0]);
+      const yScale = scaleLinear().domain([0, highCount]).range([height, 0]);
 
       const colorScale = scaleLinear()
         .domain([height * 0.5, height * 0.6, height])
@@ -57,7 +47,7 @@ export default function Chart(props) {
         .attr("fill", colorScale)
         .attr("height", (value) => height - yScale(value));
     }
-  }, [svgRef, width, height, data]);
+  }, [svgRef, width, height, data, highCount]);
 
   return (
     <div>
