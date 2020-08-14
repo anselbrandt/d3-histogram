@@ -11,18 +11,16 @@ export default function Chart(props) {
     if (data && highCount) {
       const xScale = scaleBand()
         .domain(data.map((value, index) => index))
-        .range([0, width])
-        .padding(0.5);
+        .range([0, width]);
 
       const yScale = scaleLinear().domain([0, highCount]).range([height, 0]);
 
-      const colorScale = scaleLinear()
-        .domain([height * 0.5, height * 0.6, height])
-        .range(["green", "orange", "red"])
-        .clamp(true);
+      // const colorScale = scaleLinear()
+      //   .domain([height * 0.5, height * 0.6, height])
+      //   .range(["green", "orange", "red"])
+      //   .clamp(true);
 
       const xAxis = axisBottom(xScale).ticks(data.length);
-
       svg
         .select(`.${styles.xAxis}`)
         .style("transform", `translateY(${height}px)`)
@@ -41,7 +39,7 @@ export default function Chart(props) {
         .attr("y", -height)
         .attr("width", xScale.bandwidth())
         .transition()
-        .attr("fill", colorScale)
+        .attr("fill", "tomato")
         .attr("height", (value) => height - yScale(value));
     }
   }, [svgRef, width, height, data, highCount]);
