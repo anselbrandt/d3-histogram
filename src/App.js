@@ -17,6 +17,7 @@ function App() {
   const [max, setMax] = useState();
   const [histogram, setHistogram] = useState();
   const [highCount, setHighCount] = useState();
+  const [peakValue, setPeakValue] = useState();
   const [target, setTarget] = useState(330000);
 
   useEffect(() => {
@@ -37,6 +38,8 @@ function App() {
       console.log(hist);
       const high = Math.max(...hist.map((value) => value.count));
       setHighCount(high);
+      const peak = hist.filter((value) => value.count === high);
+      setPeakValue(parseInt(peak[0].bin));
     }
   }, [data, histBins, cutoff]);
 
@@ -83,6 +86,7 @@ function App() {
           cutoff={cutoff}
           histBins={histBins}
           highCount={highCount}
+          peakValue={peakValue}
           histogram={histogram}
         />
       </div>
